@@ -180,6 +180,7 @@
       congratsEl.textContent = "";
 
       if (currentIndex >= clues.length) {
+        updateProgress();
         questionEl.style.display = "none";
         answerInput.style.display = "none";
         submitBtn.style.display = "none";
