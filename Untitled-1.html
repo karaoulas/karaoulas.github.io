@@ -178,6 +178,7 @@
       feedbackEl.textContent = "";
       feedbackEl.className = "";
       congratsEl.textContent = "";
+      updateProgress();
 
       if (currentIndex >= clues.length) {
         questionEl.style.display = "none";
@@ -206,7 +207,6 @@
       img.src = clue.image;
       img.alt = "Εικόνα ερώτησης";
       img.style.display = "block";
-      updateProgress();
     }
 
     // === Συνάρτηση που ελέγχει την απάντηση ===
