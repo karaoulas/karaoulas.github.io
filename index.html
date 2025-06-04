@@ -126,9 +126,54 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    /* ===== Welcome Overlay ===== */
+    #welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    #welcome-overlay.hidden { display: none; }
+    .welcome-content {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    #start-game {
+      margin-top: 20px;
+      background: linear-gradient(to right, #4CAF50, #45a049);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    /* ===== Floating Hearts ===== */
+    .heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 24px;
+      animation: floatUp 2s ease forwards;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-60px); opacity: 0; }
+    }
   </style>
 </head>
 <body>
+  <div id="welcome-overlay">
+    <div class="welcome-content">
+      <h1>Καλώς ήρθες!</h1>
+      <p>Πάτα το κουμπί για να ξεκινήσεις</p>
+      <button id="start-game">Ξεκίνα</button>
+    </div>
+  </div>
   <div class="container">
     <h1>Κυνήγι Θησαυρού</h1>
     <div id="question-container">
@@ -223,6 +268,27 @@
       const percentage = (currentIndex / clues.length) * 100;
       progress.style.width = `${percentage}%`;
     }
+
+    const overlay = document.getElementById("welcome-overlay");
+    const startBtn = document.getElementById("start-game");
+
+    function createHeart(x, y) {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = "💜";
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+
+    document.addEventListener("click", (e) => {
+      createHeart(e.clientX, e.clientY);
+    });
+
+    startBtn.addEventListener("click", () => {
+      overlay.classList.add("hidden");
+    });
 
     window.onload = () => {
       showCurrentClue();
