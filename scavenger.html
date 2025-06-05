@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κυνήγι Θησαυρού</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 450px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    h1 {
+      margin-top: 0;
+      color: #2d3748;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+    #question {
+      font-size: 20px;
+      margin: 25px 0;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    #question::before {
+      content: "🎯";
+      font-size: 24px;
+    }
+    #answer {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    #answer:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    }
+    #submit {
+      background: linear-gradient(to right, #4CAF50, #45a049);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    #submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(69, 160, 73, 0.3);
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 16px;
+      min-height: 20px;
+      transition: all 0.3s ease;
+    }
+    .feedback-error {
+      color: #e53e3e;
+      animation: shake 0.5s ease;
+    }
+    .feedback-success {
+      color: #38a169;
+      animation: slideUp 0.5s ease;
+    }
+    #congrats {
+      font-size: 24px;
+      color: #2d3748;
+      margin-top: 20px;
+      animation: fadeIn 1s ease;
+    }
+    #progress-container {
+      width: 100%;
+      background-color: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 10px;
+      margin-top: 20px;
+    }
+    #progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(to right, #4CAF50, #45a049);
+      transition: width 0.5s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* ===== Welcome Overlay ===== */
+    #welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    #welcome-overlay.hidden { display: none; }
+    .welcome-content {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    #start-game {
+      margin-top: 20px;
+      background: linear-gradient(to right, #4CAF50, #45a049);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    /* ===== Floating Hearts ===== */
+    .heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 24px;
+      animation: floatUp 2s ease forwards;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-60px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="welcome-overlay">
+    <div class="welcome-content">
+      <h1>Καλώς ήρθες!</h1>
+      <p>Πάτα το κουμπί για να ξεκινήσεις</p>
+      <button id="start-game">Ξεκίνα</button>
+    </div>
+  </div>
+  <div class="container">
+    <h1>Κυνήγι Θησαυρού</h1>
+    <div id="question-container">
+      <div id="question"></div>
+      <input type="text" id="answer" placeholder="Η απάντησή σου...">
+      <button id="submit">Υποβολή</button>
+    </div>
+    <div id="feedback" class="feedback"></div>
+    <div id="congrats" class="congrats"></div>
+    <div id="progress-container">
+      <div id="progress"></div>
+    </div>
+  </div>
+  <script>
+    // === Πίνακας με τις ερωτήσεις ===
+    const clues = [
+      {
+        question: "Πού πήγαμε για καφέ την πρώτη φορά;",
+        answer: "lartisan",
+        image: "striped-small-cat-not-purebred-kitten-kitten-white-background-predator-31398453.jpg"
+      },
+      {
+        question: "Σε ποιο παγκάκι βγάλαμε την πρώτη κοινή φωτογραφία;",
+        answer: "παγκάκι κεντρικής πλατείας",
+        image: "img/bench.jpg"
+      },
+      {
+        question: "Σε ποιο κατάστημα αγόρασα το δώρο που σου δίνω σήμερα;",
+        answer: "dorofactory",
+        image: "img/giftshop.jpg"
+      }
+    ];
+
+    let currentIndex = 0;
+    const questionEl = document.getElementById("question");
+    const answerInput = document.getElementById("answer");
+    const submitBtn = document.getElementById("submit");
+    const feedbackEl = document.getElementById("feedback");
+    const congratsEl = document.getElementById("congrats");
+
+    function showCurrentClue() {
+      feedbackEl.textContent = "";
+      feedbackEl.className = "";
+      congratsEl.textContent = "";
+      updateProgress();
+      if (currentIndex >= clues.length) {
+        questionEl.style.display = "none";
+        answerInput.style.display = "none";
+        submitBtn.style.display = "none";
+        if (document.getElementById("question-image")) {
+          document.getElementById("question-image").style.display = "none";
+        }
+        congratsEl.innerHTML = `🎉 Συγχαρητήρια! Ολοκλήρωσες το κυνήγι! 🎉`;
+        return;
+      }
+      const clue = clues[currentIndex];
+      questionEl.textContent = clue.question;
+      let img = document.getElementById("question-image");
+      if (!img) {
+        img = document.createElement("img");
+        img.id = "question-image";
+        img.style.maxWidth = "100%";
+        img.style.borderRadius = "12px";
+        img.style.margin = "0 auto 18px auto";
+        img.style.display = "block";
+        questionEl.parentNode.insertBefore(img, questionEl);
+      }
+      img.src = clue.image;
+      img.alt = "Εικόνα ερώτησης";
+      img.style.display = "block";
+    }
+
+    function checkAnswer() {
+      const userAnswer = answerInput.value.trim().toLowerCase();
+      const correctAnswer = clues[currentIndex].answer.trim().toLowerCase();
+      if (userAnswer === correctAnswer) {
+        feedbackEl.textContent = "Μπράβο! Σωστή απάντηση! 🎉";
+        feedbackEl.className = "feedback-success";
+        setTimeout(() => {
+          currentIndex++;
+          answerInput.value = "";
+          showCurrentClue();
+        }, 1500);
+      } else {
+        feedbackEl.textContent = "Λάθος, δοκίμασε ξανά! 🤔";
+        feedbackEl.className = "feedback-error";
+      }
+    }
+
+    function updateProgress() {
+      const progress = document.getElementById("progress");
+      const percentage = (currentIndex / clues.length) * 100;
+      progress.style.width = `${percentage}%`;
+    }
+
+    const overlay = document.getElementById("welcome-overlay");
+    const startBtn = document.getElementById("start-game");
+
+    function createHeart(x, y) {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = "💜";
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+
+    document.addEventListener("click", (e) => {
+      createHeart(e.clientX, e.clientY);
+    });
+
+    startBtn.addEventListener("click", () => {
+      overlay.classList.add("hidden");
+    });
+
+    window.onload = () => {
+      showCurrentClue();
+    };
+    submitBtn.addEventListener("click", checkAnswer);
+    answerInput.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        checkAnswer();
+      }
+    });
+  </script>
+</body>
+</html>
