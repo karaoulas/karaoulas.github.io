@@ -1,96 +1,478 @@
+<!-- Modern Portfolio for Michalis Karaoulas -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Karaoulas Portfolio</title>
+  <title>Michalis Karaoulas | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: #fdfdfd;
-      --fg: #333;
+      --bg: #f7f9fa;
+      --fg: #222;
+      --accent: #4ABDAC;
+      --accent2: #FC4A1A;
+      --card-bg: #fff;
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.07);
       --link: #1e88e5;
+      --badge-bg: #e3e8ee;
+      --badge-fg: #222;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #121212;
+        --bg: #181c1f;
         --fg: #e0e0e0;
+        --accent: #4ABDAC;
+        --accent2: #FC4A1A;
+        --card-bg: #23272a;
+        --card-shadow: 0 4px 24px rgba(0,0,0,0.25);
         --link: #90caf9;
+        --badge-bg: #23272a;
+        --badge-fg: #e0e0e0;
       }
     }
-    body {
+    html, body {
       margin: 0;
-      font-family: system-ui, sans-serif;
+      padding: 0;
+      font-family: 'Montserrat', 'Fira Code', system-ui, sans-serif;
       background: var(--bg);
       color: var(--fg);
-      line-height: 1.6;
+      min-height: 100vh;
     }
     header {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem 2rem 1rem;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .hero-typing {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      min-height: 32px;
+    }
+    nav {
+      margin-top: 1.5rem;
     }
     nav a {
-      margin: 0 0.5rem;
-      color: var(--link);
+      color: #fff;
       text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #222;
     }
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 1rem;
+      padding: 2rem 1rem 3rem 1rem;
     }
-    h1,h2 {
-      margin-top: 0;
+    section {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    section.visible {
+      opacity: 1;
+      transform: none;
+    }
+    h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .about {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .badges img {
+      height: 28px;
+      border-radius: 4px;
+      background: var(--badge-bg);
+      color: var(--badge-fg);
+      padding: 2px 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
     .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
     }
     .card {
-      border: 1px solid #ccc;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      border: 1px solid #e3e8ee;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.5s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .card.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(76, 189, 172, 0.12);
+    }
+    .card h3 {
+      margin: 0 0 0.3rem 0;
+      color: var(--accent2);
+      font-size: 1.2rem;
+    }
+    .card a {
+      color: var(--link);
+      text-decoration: underline;
+      font-size: 1rem;
+    }
+    .card img {
+      max-width: 100%;
       border-radius: 8px;
-      padding: 1rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .contact {
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .contact a {
+      color: var(--accent2);
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .contact a.btn, .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff !important;
+      font-weight: 700;
+      padding: 0.7em 1.5em;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(76,189,172,0.10);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+      text-decoration: none;
+      margin: 0.5em 0.2em;
+    }
+    .contact a.btn:hover, .btn:hover {
+      background: linear-gradient(90deg, var(--accent2) 0%, var(--accent) 100%);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 4px 16px rgba(76,189,172,0.18);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .skill-category {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--card-shadow);
+      padding: 1.2rem 1rem 1rem 1rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #e3e8ee;
+      min-width: 0;
+    }
+    .skill-category h3 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      color: var(--accent2);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .skill-category .badges {
+      gap: 0.4rem;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .hero-title { font-size: 1.5rem; }
+      h2 { font-size: 1.3rem; }
+      main { padding: 1rem 0.2rem; }
+      .card { padding: 1rem 0.5rem; }
+    }
+    @media (max-width: 900px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Karaoulas</h1>
+    <div class="hero-title">Hi there 👋 I'm Michalis Karaoulas</div>
+    <div class="hero-typing" id="typing"></div>
     <nav>
       <a href="#about">About</a>
+      <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
   <main>
     <section id="about">
-      <h2>About Me</h2>
-      <p>Junior software developer building a job-ready portfolio with the GitHub Student Developer Pack.</p>
+      <h2>About</h2>
+      <div class="about">
+        <p>Computer Science student at Aristotle University of Thessaloniki (expected graduation: 2025). Specializes in programming, data analysis, machine learning, and cloud technologies. Interested in digital identity, secure software, and building solutions that empower trust in a digital world.</p>
+        <p><b>Languages:</b> English (C2), German (B2)</p>
+        <p><b>Education:</b> BSc in Computer Science, Aristotle University of Thessaloniki (2025)</p>
+      </div>
+    </section>
+    <section id="skills">
+      <h2>Skills & Tools</h2>
+      <div class="skills-grid">
+        <!-- Languages -->
+        <div class="skill-category">
+          <h3>Languages</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" alt="Python" />
+            <img src="https://img.shields.io/badge/Java-007396?logo=java&logoColor=white" alt="Java" />
+            <img src="https://img.shields.io/badge/C-575E75?logo=C&logoColor=white" alt="C" />
+            <img src="https://img.shields.io/badge/C%2B%2B-00599C?logo=c%2B%2B&logoColor=white" alt="C++" />
+            <img src="https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white" alt="PHP" />
+            <img src="https://img.shields.io/badge/SQL-4479A1?logo=MySQL&logoColor=white" alt="SQL" />
+            <img src="https://img.shields.io/badge/HTML-E34F26?logo=html5&logoColor=white" alt="HTML5" />
+            <img src="https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white" alt="CSS3" />
+            <img src="https://img.shields.io/badge/SPARQL-000000?logo=graphql&logoColor=white" alt="SPARQL" />
+            <img src="https://img.shields.io/badge/MATLAB-0076A8?logo=matlab&logoColor=white" alt="MATLAB" />
+          </div>
+        </div>
+        <!-- Libraries & Frameworks -->
+        <div class="skill-category">
+          <h3>Libraries & Frameworks</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white" alt="Flask" />
+            <img src="https://img.shields.io/badge/Selenium-43B02A?logo=selenium&logoColor=white" alt="Selenium" />
+            <img src="https://img.shields.io/badge/BeautifulSoup-4B2033?logo=python&logoColor=white" alt="Beautiful Soup" />
+            <img src="https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white" alt="pandas" />
+            <img src="https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white" alt="NumPy" />
+            <img src="https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn&logoColor=white" alt="scikit-learn" />
+          </div>
+        </div>
+        <!-- APIs & Auth -->
+        <div class="skill-category">
+          <h3>APIs & Auth</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/REST%20APIs-005571?logo=swagger&logoColor=white" alt="REST APIs" />
+            <img src="https://img.shields.io/badge/OAuth%202.0-3C5A99?logo=oauth&logoColor=white" alt="OAuth 2.0" />
+            <img src="https://img.shields.io/badge/OpenID%20Connect-0082C9?logo=openid&logoColor=white" alt="OpenID Connect" />
+            <img src="https://img.shields.io/badge/JWT-000000?logo=jsonwebtokens&logoColor=white" alt="JWT" />
+          </div>
+        </div>
+        <!-- Cloud & DevOps -->
+        <div class="skill-category">
+          <h3>Cloud & DevOps</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazonaws&logoColor=white" alt="AWS" />
+            <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker" />
+            <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions" />
+            <img src="https://img.shields.io/badge/CI%2FCD-222222?logo=githubactions&logoColor=white" alt="CI/CD" />
+          </div>
+        </div>
+        <!-- Security -->
+        <div class="skill-category">
+          <h3>Security</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/RSA-ECC-4ABDAC?logo=cryptography&logoColor=white" alt="RSA/ECC" />
+            <img src="https://img.shields.io/badge/Auth%20Tokens-4ABDAC?logo=jwt&logoColor=white" alt="Auth Tokens" />
+          </div>
+        </div>
+        <!-- Databases -->
+        <div class="skill-category">
+          <h3>Databases</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/MySQL-4479A1?logo=MySQL&logoColor=white" alt="MySQL" />
+            <img src="https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white" alt="PostgreSQL" />
+          </div>
+        </div>
+        <!-- Tools -->
+        <div class="skill-category">
+          <h3>Tools</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white" alt="Git" />
+            <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux" />
+            <img src="https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white" alt="Jupyter" />
+            <img src="https://img.shields.io/badge/WordPress-21759B?logo=wordpress&logoColor=white" alt="WordPress" />
+          </div>
+        </div>
+        <!-- Practices -->
+        <div class="skill-category">
+          <h3>Practices</h3>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/Unit%20Testing-6DB33F?logo=pytest&logoColor=white" alt="Unit Testing" />
+            <img src="https://img.shields.io/badge/Agile-0277BD?logo=scrumalliance&logoColor=white" alt="Agile" />
+            <img src="https://img.shields.io/badge/Version%20Control-181717?logo=github&logoColor=white" alt="Version Control" />
+          </div>
+        </div>
+      </div>
     </section>
     <section id="projects">
       <h2>Projects</h2>
       <div class="projects">
         <div class="card">
-          <h3>Portfolio Site</h3>
-          <p>Static site hosted on GitHub Pages. Built with HTML, CSS and a bit of JavaScript.</p>
+          <h3>MyMarket (Java)</h3>
+          <p>A Java-based application for simulating and managing a marketplace, featuring advanced object-oriented design and data management.</p>
+          <ul>
+            <li>Inventory, orders, customers, transactions</li>
+            <li>Java collections, file I/O, custom data structures</li>
+          </ul>
+          <a href="https://github.com/karaoulas/MyMarket" target="_blank">View Repository</a>
         </div>
         <div class="card">
-          <h3>Flagship App</h3>
-          <p>Full‑stack app deployed to the cloud. Coming soon!</p>
+          <h3>Distributed Messaging System (Java RMI)</h3>
+          <p>A fully functional distributed messaging application built with Java RMI.</p>
+          <ul>
+            <li>Remote method invocation, multithreaded server/client</li>
+            <li>Authentication, serialization</li>
+          </ul>
+          <a href="https://github.com/karaoulas/JavaRMI" target="_blank">View Repository</a>
         </div>
         <div class="card">
-          <h3>Open Source Contributions</h3>
-          <p>Links to merged PRs and community work.</p>
+          <h3>Dynamic Educational Website</h3>
+          <p>A learning platform prototype with user roles for tutors and students. Dynamic PHP/MySQL application.</p>
+          <ul>
+            <li>User management, announcements, assignments</li>
+            <li>Secure authentication, dynamic forms</li>
+          </ul>
+          <a href="https://karaoulas.webpages.auth.gr/3747partB/login.php" target="_blank">Live Demo</a>
+        </div>
+        <div class="card">
+          <h3>Database Design for a Commercial Business</h3>
+          <p>ER diagram and relational model for inventory and sales analysis. Complex SQL queries for analytics.</p>
+        </div>
+        <div class="card">
+          <h3>Insurance Contracts Analysis System (Python)</h3>
+          <p>Data analysis pipeline for processing insurance contract XML files. Visual insights and predictive models.</p>
+          <a href="https://github.com/karaoulas/Insurance" target="_blank">View Repository</a>
+        </div>
+        <div class="card">
+          <h3>FlowerPred — Flower Classifier Web App</h3>
+          <p>Web app that classifies flower images. Multilingual, top-3 predictions, responsive UI, Hugging Face model.</p>
+          <a href="https://github.com/karaoulas/FlowerPred" target="_blank">View Repository</a>
+        </div>
+        <div class="card">
+          <h3>DigVer — Digital Credential Issuer & Verifier <span style="color:var(--accent);font-size:0.9em;">(Relevant to eID/eIDAS)</span></h3>
+          <p>Flask web app simulating a digital credential ecosystem (eIDAS-inspired). Signed JSON credentials, QR code sharing, asymmetric key management, and expiry checks.</p>
+          <a href="https://github.com/karaoulas/DigVer" target="_blank">View Repository</a>
         </div>
       </div>
     </section>
+    <section id="experience">
+      <h2>Professional Experience</h2>
+      <div class="card">
+        <h3>Insurance Office Collaboration (2022 – 2024)</h3>
+        <p><a href="https://insurancekaraoulas.gr" target="_blank">insurancekaraoulas.gr</a></p>
+        <ul>
+          <li>Supported management and analysis of insurance contracts</li>
+          <li>Developed automation tools for process optimization and report generation</li>
+          <li>Data analysis and visualization of statistical metrics</li>
+          <li>Utilized Bluebyte software for administrative tasks and data entry</li>
+        </ul>
+      </div>
+    </section>
     <section id="contact">
-      <h2>Get in Touch</h2>
-      <p>Email: <a href="mailto:example@example.com">example@example.com</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/">linkedin.com</a></p>
-      <p>GitHub: <a href="https://github.com/karaoulas">@karaoulas</a></p>
+      <h2>Contact</h2>
+      <div class="contact">
+        <a href="mailto:mixaliskappa@gmail.com">Email</a> |
+        <a href="https://github.com/karaoulas" target="_blank">GitHub</a> |
+        <a href="Michalis-Karaoulas-CV.pdf" class="btn" download>Download CV</a>
+      </div>
     </section>
   </main>
+  <script>
+    // Typing animation for hero section
+    const lines = [
+      "Computer Science Student | ML | AI | Cloud Enthusiast",
+      "Welcome to my portfolio!"
+    ];
+    let line = 0, char = 0;
+    const typingEl = document.getElementById('typing');
+    function type() {
+      if (line < lines.length) {
+        if (char < lines[line].length) {
+          typingEl.textContent = lines[line].slice(0, char+1);
+          char++;
+          setTimeout(type, 60);
+        } else {
+          setTimeout(() => {
+            char = 0;
+            line++;
+            setTimeout(type, 700);
+          }, 1200);
+        }
+      } else {
+        line = 0;
+        char = 0;
+        setTimeout(type, 700);
+      }
+    }
+    type();
+
+    // Fade-in animation for sections and cards
+    function revealOnScroll() {
+      const sections = document.querySelectorAll('section');
+      const cards = document.querySelectorAll('.card');
+      const reveal = (el, delay = 0) => {
+        setTimeout(() => el.classList.add('visible'), delay);
+      };
+      // Sections
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          reveal(section);
+        }
+      });
+      // Cards (staggered)
+      let delay = 0;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          reveal(card, delay);
+          delay += 120;
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', revealOnScroll);
+  </script>
 </body>
 </html>
