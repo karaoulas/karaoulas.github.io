@@ -44,8 +44,64 @@
     header {
       text-align: center;
       padding: 3rem 1rem 2rem 1rem;
-      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent2) 100%);
       color: #fff;
+      min-height: 340px;
+    }
+    /* Animated gradient background for hero */
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 20% 30%, #4ABDAC55 0%, transparent 60%),
+                  radial-gradient(circle at 80% 70%, #FC4A1A55 0%, transparent 60%);
+      animation: heroGradientMove 8s ease-in-out infinite alternate;
+    }
+    @keyframes heroGradientMove {
+      0% {
+        background-position: 20% 30%, 80% 70%;
+      }
+      100% {
+        background-position: 30% 40%, 70% 60%;
+      }
+    }
+    /* Particle dots */
+    .hero-particles {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+      background: #fff;
+      animation: float 7s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-30px) scale(1.15); }
+    }
+    /* Hero entrance animation */
+    .hero-content { position: relative; z-index: 2; }
+    .hero-title, .hero-typing, .hero-cta {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .hero-title.visible, .hero-typing.visible, .hero-cta.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .hero-cta {
+      margin-top: 1.2rem;
+      display: inline-block;
     }
     .hero-title {
       font-size: 2.5rem;
@@ -156,6 +212,15 @@
       margin-bottom: 0.5rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
+    .card .project-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.7rem;
+      background: #e3e8ee;
+      display: block;
+    }
     .stats {
       display: flex;
       flex-wrap: wrap;
@@ -223,6 +288,32 @@
       gap: 0.4rem;
       margin-bottom: 0;
     }
+    /* Contact Social Icons */
+    .contact .social {
+      margin-top: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+    .contact .social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e3e8ee;
+      transition: background 0.2s, box-shadow 0.2s;
+      color: var(--accent2);
+      font-size: 1.3rem;
+    }
+    .contact .social a:hover {
+      background: var(--accent2);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(252,74,26,0.18);
+    }
     @media (max-width: 600px) {
       .hero-title { font-size: 1.5rem; }
       h2 { font-size: 1.3rem; }
@@ -238,15 +329,25 @@
 </head>
 <body>
   <header>
-    <div class="hero-title">Hi there 👋 I'm Michalis Karaoulas</div>
-    <div class="hero-typing" id="typing"></div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="hero-bg"></div>
+    <div class="hero-particles">
+      <div class="hero-particle" style="width:32px;height:32px;left:12%;top:22%;animation-delay:0s;"></div>
+      <div class="hero-particle" style="width:18px;height:18px;left:80%;top:30%;animation-delay:1.2s;"></div>
+      <div class="hero-particle" style="width:24px;height:24px;left:60%;top:70%;animation-delay:2.1s;"></div>
+      <div class="hero-particle" style="width:14px;height:14px;left:35%;top:60%;animation-delay:0.7s;"></div>
+      <div class="hero-particle" style="width:20px;height:20px;left:70%;top:15%;animation-delay:1.7s;"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-title">Hi there 👋 I'm Michalis Karaoulas</div>
+      <div class="hero-typing" id="typing"></div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
   <main>
     <section id="about">
@@ -349,6 +450,7 @@
       <h2>Projects</h2>
       <div class="projects">
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/mymarket.jpg" alt="MyMarket Screenshot" onerror="this.style.display='none'"/>
           <h3>MyMarket (Java)</h3>
           <p>A Java-based application for simulating and managing a marketplace, featuring advanced object-oriented design and data management.</p>
           <ul>
@@ -358,6 +460,7 @@
           <a href="https://github.com/karaoulas/MyMarket" target="_blank">View Repository</a>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/javarmi.jpg" alt="Java RMI Screenshot" onerror="this.style.display='none'"/>
           <h3>Distributed Messaging System (Java RMI)</h3>
           <p>A fully functional distributed messaging application built with Java RMI.</p>
           <ul>
@@ -367,6 +470,7 @@
           <a href="https://github.com/karaoulas/JavaRMI" target="_blank">View Repository</a>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/edu.jpg" alt="Educational Website Screenshot" onerror="this.style.display='none'"/>
           <h3>Dynamic Educational Website</h3>
           <p>A learning platform prototype with user roles for tutors and students. Dynamic PHP/MySQL application.</p>
           <ul>
@@ -376,20 +480,24 @@
           <a href="https://karaoulas.webpages.auth.gr/3747partB/login.php" target="_blank">Live Demo</a>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/db.jpg" alt="Database Design Screenshot" onerror="this.style.display='none'"/>
           <h3>Database Design for a Commercial Business</h3>
           <p>ER diagram and relational model for inventory and sales analysis. Complex SQL queries for analytics.</p>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/insurance.jpg" alt="Insurance Analysis Screenshot" onerror="this.style.display='none'"/>
           <h3>Insurance Contracts Analysis System (Python)</h3>
           <p>Data analysis pipeline for processing insurance contract XML files. Visual insights and predictive models.</p>
           <a href="https://github.com/karaoulas/Insurance" target="_blank">View Repository</a>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/flowerpred.jpg" alt="FlowerPred Screenshot" onerror="this.style.display='none'"/>
           <h3>FlowerPred — Flower Classifier Web App</h3>
           <p>Web app that classifies flower images. Multilingual, top-3 predictions, responsive UI, Hugging Face model.</p>
           <a href="https://github.com/karaoulas/FlowerPred" target="_blank">View Repository</a>
         </div>
         <div class="card">
+          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/digver.jpg" alt="DigVer Screenshot" onerror="this.style.display='none'"/>
           <h3>DigVer — Digital Credential Issuer & Verifier <span style="color:var(--accent);font-size:0.9em;">(Relevant to eID/eIDAS)</span></h3>
           <p>Flask web app simulating a digital credential ecosystem (eIDAS-inspired). Signed JSON credentials, QR code sharing, asymmetric key management, and expiry checks.</p>
           <a href="https://github.com/karaoulas/DigVer" target="_blank">View Repository</a>
@@ -447,6 +555,19 @@
     }
     type();
 
+    // Animate hero entrance
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.querySelector('.hero-title').classList.add('visible');
+      }, 200);
+      setTimeout(() => {
+        document.querySelector('.hero-typing').classList.add('visible');
+      }, 700);
+      setTimeout(() => {
+        document.querySelector('.hero-cta').classList.add('visible');
+      }, 1200);
+    });
+
     // Fade-in animation for sections and cards
     function revealOnScroll() {
       const sections = document.querySelectorAll('section');
@@ -473,6 +594,25 @@
     }
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('DOMContentLoaded', revealOnScroll);
+
+    // Particle background animation
+    function createParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.className = 'hero-particle';
+      particle.style.width = Math.random() * 8 + 'px';
+      particle.style.height = particle.style.width;
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      document.querySelector('.hero-particles').appendChild(particle);
+      setTimeout(() => {
+        particle.remove();
+      }, 7000);
+    }
+    setInterval(() => {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      createParticle(x, y);
+    }, 150);
   </script>
 </body>
 </html>
