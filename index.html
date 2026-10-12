@@ -1,270 +1,328 @@
-<!-- Modern Portfolio for Michalis Karaoulas -->
+<!-- Modern Portfolio for Michalis Giannakopoulos -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Michalis Karaoulas | Portfolio</title>
+  <title>Michalis Giannakopoulos | Data Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #f7f9fa;
       --fg: #222;
       --accent: #4ABDAC;
+      --accent-hover: #3a9b8e;
       --accent2: #FC4A1A;
       --card-bg: #fff;
-      --card-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      --border: #e3e8ee;
       --link: #1e88e5;
       --badge-bg: #e3e8ee;
       --badge-fg: #222;
+      --nav-bg: rgba(255, 255, 255, 0.1);
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #181c1f;
-        --fg: #e0e0e0;
-        --accent: #4ABDAC;
-        --accent2: #FC4A1A;
-        --card-bg: #23272a;
-        --card-shadow: 0 4px 24px rgba(0,0,0,0.25);
-        --link: #90caf9;
-        --badge-bg: #23272a;
-        --badge-fg: #e0e0e0;
-      }
+    
+    [data-theme="dark"] {
+      --bg: #0f1115;
+      --fg: #e2e8f0;
+      --card-bg: #1e2128;
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      --border: #2d333b;
+      --link: #64b5f6;
+      --badge-bg: #2d333b;
+      --badge-fg: #e2e8f0;
+      --nav-bg: rgba(0, 0, 0, 0.2);
     }
+
+    * { box-sizing: border-box; }
+    
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Montserrat', 'Fira Code', system-ui, sans-serif;
+      font-family: 'Montserrat', system-ui, sans-serif;
       background: var(--bg);
       color: var(--fg);
       min-height: 100vh;
+      scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
     }
+
+    /* Scroll Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0%;
+      z-index: 1000;
+      transition: width 0.1s;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: var(--nav-bg);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      backdrop-filter: blur(5px);
+      z-index: 10;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+    }
+
     header {
       text-align: center;
-      padding: 3rem 1rem 2rem 1rem;
+      padding: 5rem 1rem 3rem 1rem;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(120deg, var(--accent) 0%, var(--accent2) 100%);
+      background: linear-gradient(135deg, #1e2128 0%, #0f1115 100%);
       color: #fff;
-      min-height: 340px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    .hero-bg {
+
+    /* Network Canvas Background */
+    #networkCanvas {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 20% 30%, #4ABDAC55 0%, transparent 60%),
-                  radial-gradient(circle at 80% 70%, #FC4A1A55 0%, transparent 60%);
-      animation: heroGradientMove 8s ease-in-out infinite alternate;
-    }
-    @keyframes heroGradientMove {
-      0% { background-position: 20% 30%, 80% 70%; }
-      100% { background-position: 30% 40%, 70% 60%; }
-    }
-    .hero-particles {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: 1;
-      pointer-events: none;
+      opacity: 0.6;
     }
-    .hero-particle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.18;
-      background: #fff;
-      animation: float 7s ease-in-out infinite alternate;
-    }
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-30px) scale(1.15); }
-    }
+
     .hero-content { position: relative; z-index: 2; }
-    .hero-title, .hero-typing, .hero-cta {
+    
+    .hero-title, .hero-typing {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(.4,0,.2,1);
     }
-    .hero-title.visible, .hero-typing.visible, .hero-cta.visible {
+    .hero-title.visible, .hero-typing.visible {
       opacity: 1;
       transform: none;
     }
+    
     .hero-title {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
-      letter-spacing: 1px;
+      background: linear-gradient(to right, #fff, #a0aec0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+    
     .hero-typing {
       font-family: 'Fira Code', monospace;
-      font-size: 1.2rem;
-      color: #fff;
-      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 2rem;
       min-height: 32px;
     }
-    nav { margin-top: 1.5rem; }
+
+    nav {
+      background: var(--nav-bg);
+      padding: 10px 20px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
     nav a {
       color: #fff;
       text-decoration: none;
-      margin: 0 1rem;
+      margin: 0 15px;
       font-weight: 600;
-      font-size: 1.1rem;
       transition: color 0.2s;
     }
-    nav a:hover { color: #222; }
+    nav a:hover { color: var(--accent); }
+
     main {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1rem 3rem 1rem;
+      padding: 3rem 1.5rem;
     }
+
     section {
-      margin-bottom: 2.5rem;
+      margin-bottom: 4rem;
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+      transform: translateY(30px);
+      transition: all 0.7s cubic-bezier(.4,0,.2,1);
     }
     section.visible { opacity: 1; transform: none; }
+
     h2 {
       color: var(--accent);
-      margin-bottom: 1rem;
-      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: inline-block;
+      border-bottom: 3px solid var(--accent2);
+      padding-bottom: 5px;
     }
-    .about {
+
+    .about p {
       font-size: 1.15rem;
-      line-height: 1.7;
-      margin-bottom: 0.5rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      color: var(--fg);
     }
+
+    .highlight-box {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem;
+      border-radius: 0 8px 8px 0;
+      box-shadow: var(--card-shadow);
+      margin: 2rem 0;
+    }
+
     .badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.6rem;
     }
     .badges img {
-      height: 28px;
+      height: 30px;
       border-radius: 4px;
-      background: var(--badge-bg);
-      color: var(--badge-fg);
-      padding: 2px 6px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
     }
+    .badges img:hover { transform: translateY(-2px); }
+
+    /* Project Filtering */
+    .filter-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--card-bg);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
     .projects, .experience-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
+    
     .card {
       background: var(--card-bg);
       border-radius: 12px;
       box-shadow: var(--card-shadow);
-      padding: 1.5rem 1.2rem;
+      padding: 1.8rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
-      border: 1px solid #e3e8ee;
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.5s;
-      opacity: 0;
-      transform: translateY(30px);
+      height: 100%;
     }
-    .card.visible { opacity: 1; transform: none; }
     .card:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 8px 32px rgba(76, 189, 172, 0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(76, 189, 172, 0.15);
+      border-color: var(--accent);
     }
+    
     .card h3 {
-      margin: 0 0 0.3rem 0;
+      margin: 0 0 1rem 0;
       color: var(--accent2);
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      line-height: 1.4;
     }
+    .card p { flex-grow: 1; line-height: 1.6; margin-bottom: 1.5rem; }
+    
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    
     .card a {
       color: var(--link);
-      text-decoration: underline;
-      font-size: 1rem;
-    }
-    .card .project-img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 0.7rem;
-      background: #e3e8ee;
-      display: block;
-    }
-    .contact { text-align: center; font-size: 1.1rem; }
-    .contact a {
-      color: var(--accent2);
       text-decoration: none;
-      margin: 0 0.5rem;
       font-weight: 600;
-      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .contact a.btn, .btn {
+    .card a:hover { text-decoration: underline; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .skill-category {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    .skill-category h3 { margin-top: 0; color: var(--accent); margin-bottom: 1rem; }
+
+    .btn {
       display: inline-block;
       background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
       color: #fff !important;
       font-weight: 700;
-      padding: 0.7em 1.5em;
+      padding: 1em 2em;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 1.1rem;
-      box-shadow: 0 2px 8px rgba(76,189,172,0.10);
+      box-shadow: 0 4px 15px rgba(76,189,172,0.2);
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+      transition: all 0.2s;
       text-decoration: none;
-      margin: 0.5em 0.2em;
+      margin-top: 1rem;
     }
-    .contact a.btn:hover, .btn:hover {
-      background: linear-gradient(90deg, var(--accent2) 0%, var(--accent) 100%);
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 4px 16px rgba(76,189,172,0.18);
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(252,74,26,0.3);
     }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .skill-category {
-      background: var(--card-bg);
-      border-radius: 10px;
-      box-shadow: var(--card-shadow);
-      padding: 1.2rem 1rem 1rem 1rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #e3e8ee;
-    }
-    .skill-category h3 {
-      margin-top: 0;
-      margin-bottom: 0.7rem;
-      color: var(--accent2);
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .skill-category .badges { gap: 0.4rem; margin-bottom: 0; }
-    @media (max-width: 600px) {
-      .hero-title { font-size: 1.5rem; }
-      h2 { font-size: 1.3rem; }
-      main { padding: 1rem 0.2rem; }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2rem; }
+      nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+      nav a { margin: 0 5px; }
     }
   </style>
 </head>
 <body>
+  <div id="progress-bar"></div>
+  
   <header>
-    <div class="hero-bg"></div>
-    <div class="hero-particles">
-      <!-- Particles -->
-      <div class="hero-particle" style="width:32px;height:32px;left:12%;top:22%;animation-delay:0s;"></div>
-      <div class="hero-particle" style="width:18px;height:18px;left:80%;top:30%;animation-delay:1.2s;"></div>
-      <div class="hero-particle" style="width:24px;height:24px;left:60%;top:70%;animation-delay:2.1s;"></div>
-    </div>
+    <button class="theme-toggle" id="themeToggle">🌙 Dark Mode</button>
+    <canvas id="networkCanvas"></canvas>
     <div class="hero-content">
-      <div class="hero-title">Hi there 👋 I'm Michalis Giannakopoulos</div>
+      <div class="hero-title">Michalis Giannakopoulos</div>
       <div class="hero-typing" id="typing"></div>
       <nav>
         <a href="#about">About</a>
@@ -274,56 +332,53 @@
       </nav>
     </div>
   </header>
+
   <main>
     <section id="about">
-      <h2>About</h2>
+      <h2>About Me</h2>
       <div class="about">
-        <p>Computer Science graduate from Aristotle University of Thessaloniki (BSc, 2026) and incoming MSc student in Data & Web Science. Transitioning into Data Engineering with hands-on experience in PySpark, SQL, and modern Data Lakehouse architectures.</p>
-        <p>Passionate about scalable ETL pipelines, cloud infrastructure, and distributed computing. Fully certified AWS AI Practitioner, actively building solutions that translate raw data into business-ready insights.</p>
-        <p><b>Certifications:</b> AWS Certified AI Practitioner (AIF-C01)</p>
+        <p>I am a Data Engineer and Cloud Enthusiast focused on building scalable data pipelines and distributed systems. Currently attending my <strong>MSc in Applied Data Science</strong> following my BSc in Computer Science from Aristotle University of Thessaloniki.</p>
+        <p>With a strong foundation in Data Engineering, ETL/ELT pipelines, and Machine Learning, I specialize in transforming raw operational data into optimized, business-ready analytical assets using modern Lakehouse architectures.</p>
+        
+        <div class="highlight-box">
+          <h3 style="margin-top:0; color: var(--accent);">Certifications & Languages</h3>
+          <p><strong>AWS:</strong> Certified AI Practitioner (AIF-C01) | Certified Cloud Practitioner (Expected)</p>
+          <p><strong>Languages:</strong> English (C2 Proficient) | German (B1 Intermediate) | Greek (Native)</p>
+        </div>
       </div>
     </section>
 
     <section id="skills">
-      <h2>Skills & Tools</h2>
+      <h2>Technical Arsenal</h2>
       <div class="skills-grid">
-        <!-- Data Engineering & Cloud (Moved to Top) -->
         <div class="skill-category">
           <h3>Data Engineering & Cloud</h3>
           <div class="badges">
-            <img src="https://img.shields.io/badge/Databricks-FF3621?logo=databricks&logoColor=white" alt="Databricks" />
-            <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?logo=apachespark&logoColor=white" alt="Spark" />
-            <img src="https://img.shields.io/badge/AWS-232F3E?logo=amazonaws&logoColor=white" alt="AWS" />
-            <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker" />
-            <img src="https://img.shields.io/badge/SQL-4479A1?logo=MySQL&logoColor=white" alt="SQL" />
+            <img src="https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white" alt="Databricks" />
+            <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white" alt="Spark" />
+            <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" alt="AWS" />
+            <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
           </div>
         </div>
-        <!-- Languages -->
+        
         <div class="skill-category">
-          <h3>Programming</h3>
+          <h3>Databases & Modeling</h3>
           <div class="badges">
-            <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" alt="Python" />
-            <img src="https://img.shields.io/badge/Java-007396?logo=java&logoColor=white" alt="Java" />
-            <img src="https://img.shields.io/badge/C%2B%2B-00599C?logo=c%2B%2B&logoColor=white" alt="C++" />
+            <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" alt="SQL" />
+            <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+            <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+            <img src="https://img.shields.io/badge/Delta%20Lake-00A4CD?style=for-the-badge&logo=databricks&logoColor=white" alt="Delta Lake" />
           </div>
         </div>
-        <!-- Data Science -->
+
         <div class="skill-category">
           <h3>Data Science & ML</h3>
           <div class="badges">
-            <img src="https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white" alt="pandas" />
-            <img src="https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white" alt="NumPy" />
-            <img src="https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn&logoColor=white" alt="scikit-learn" />
-            <img src="https://img.shields.io/badge/SpaCy-09A3D5?logo=spacy&logoColor=white" alt="SpaCy" />
-          </div>
-        </div>
-        <!-- Databases -->
-        <div class="skill-category">
-          <h3>Databases</h3>
-          <div class="badges">
-            <img src="https://img.shields.io/badge/MySQL-4479A1?logo=MySQL&logoColor=white" alt="MySQL" />
-            <img src="https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white" alt="PostgreSQL" />
-            <img src="https://img.shields.io/badge/Delta%20Lake-00A4CD?logo=databricks&logoColor=white" alt="Delta Lake" />
+            <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+            <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas" />
+            <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy" />
+            <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn" />
+            <img src="https://img.shields.io/badge/SpaCy-09A3D5?style=for-the-badge&logo=spacy&logoColor=white" alt="SpaCy" />
           </div>
         </div>
       </div>
@@ -331,40 +386,65 @@
 
     <section id="projects">
       <h2>Key Projects</h2>
+      
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="data-eng">Data Engineering</button>
+        <button class="filter-btn" data-filter="data-sci">Data Science & ML</button>
+        <button class="filter-btn" data-filter="software">Software & Web</button>
+      </div>
+
       <div class="projects">
-        <!-- New Data Engineering Project -->
-        <div class="card">
-          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/databricks.jpg" alt="Databricks Pipeline" style="background:#222;" onerror="this.style.display='none'"/>
-          <h3>Medallion Data Lakehouse (Databricks)</h3>
-          <p>Designed a complete ETL pipeline utilizing the Medallion architecture (Bronze, Silver, Gold). Cleaned raw e-commerce data using PySpark and optimized analytics using Spark SQL and Delta tables.</p>
-          <a href="https://github.com/karaoulas/databricks-medallion-pipeline" target="_blank">View Repository</a>
+        <div class="card project-item" data-category="data-eng">
+          <h3>End-to-End Medallion Data Lakehouse</h3>
+          <p>Built a comprehensive Medallion Data Lakehouse architecture using <strong>Databricks, PySpark, and SQL</strong>. Designed scalable data ingestion, transformation, and analytical modeling across Bronze, Silver, and Gold layers for e-commerce data.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">Databricks • PySpark • SQL</span>
+            <a href="https://github.com/karaoulas" target="_blank">View Code ↗</a>
+          </div>
         </div>
         
-        <div class="card">
-          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/db.jpg" alt="Database Design Screenshot" onerror="this.style.display='none'"/>
-          <h3>Relational Database Design & Query Optimization</h3>
-          <p>Architected a normalized MySQL database for a commercial business. Modeled complex data using ER diagrams and executed advanced SQL JOINs/aggregations for analytics.</p>
+        <div class="card project-item" data-category="data-eng software">
+          <h3>MySQL Database System</h3>
+          <p>Designed and implemented a relational database from scratch, featuring complete ER diagram modeling, strict schema constraints, table relationships, and complex SQL queries for business analytics.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">MySQL • Relational Modeling</span>
+            <a href="https://github.com/karaoulas" target="_blank">View Code ↗</a>
+          </div>
         </div>
 
-        <div class="card">
-          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/insurance.jpg" alt="Insurance Analysis Screenshot" onerror="this.style.display='none'"/>
-          <h3>Insurance Contracts ETL & Analytics</h3>
-          <p>Data analysis pipeline built in Python for processing unstructured insurance contract XML files. Extracted insights to automate manual administrative tasks.</p>
-          <a href="https://github.com/karaoulas/Insurance" target="_blank">View Repository</a>
+        <div class="card project-item" data-category="data-sci">
+          <h3>NLP Curricula Extraction (BSc Thesis)</h3>
+          <p>Built an automated text processing pipeline in Python to ingest unstructured educational documents. Utilized BeautifulSoup and SpaCy for tokenization/lemmatization, and implemented Machine Learning (K-means, LDA Topic Modeling) to benchmark against market indicators.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">Python • NLP • ML</span>
+          </div>
         </div>
 
-        <div class="card">
-          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/digver.jpg" alt="DigVer Screenshot" onerror="this.style.display='none'"/>
+        <div class="card project-item" data-category="data-sci data-eng">
+          <h3>Insurance Contracts Analytics Pipeline</h3>
+          <p>Developed custom Python analytics scripts to parse, automate, and extract actionable insights from complex structural insurance contracts, significantly reducing manual data-entry times.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">Python • Data Extraction</span>
+            <a href="https://github.com/karaoulas/Insurance" target="_blank">View Code ↗</a>
+          </div>
+        </div>
+
+        <div class="card project-item" data-category="software">
           <h3>DigVer — Digital Credential Ecosystem</h3>
-          <p>Flask web app using Public Key Infrastructure (RSA/ECC). Containerized using Docker and deployed on AWS EC2.</p>
-          <a href="https://github.com/karaoulas/DigVer" target="_blank">View Repository</a>
+          <p>Engineered a Flask web application simulating an eIDAS-compliant Digital Identity Wallet. Implemented PKI asymmetric encryption (RSA/ECC) for secure signing, containerized with Docker, and deployed on AWS.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">Flask • Docker • AWS</span>
+            <a href="https://github.com/karaoulas/DigVer" target="_blank">View Code ↗</a>
+          </div>
         </div>
 
-        <!-- Hidden older/less relevant projects, or kept for breadth -->
-        <div class="card">
-          <img class="project-img" src="https://raw.githubusercontent.com/karaoulas/karaoulas.github.io/main/assets/flowerpred.jpg" alt="FlowerPred Screenshot" onerror="this.style.display='none'"/>
-          <h3>NLP Curricula Skill Gap Analysis</h3>
-          <p>Automated text processing pipeline utilizing BeautifulSoup, SpaCy, and Machine Learning (K-means, LDA) to benchmark academic curricula against market data.</p>
+        <div class="card project-item" data-category="software">
+          <h3>Distributed Messaging System</h3>
+          <p>Designed and implemented a multithreaded client-server communications application using Java RMI, structuring object-oriented server logic to manage concurrent socket threads and secure sessions.</p>
+          <div class="card-footer">
+            <span style="font-size: 0.85rem; color: #666;">Java RMI • Distributed Systems</span>
+          </div>
         </div>
       </div>
     </section>
@@ -373,116 +453,205 @@
       <h2>Professional Experience</h2>
       <div class="experience-grid">
         <div class="card">
-          <h3>IT Specialist & Data Operations</h3>
-          <p><strong>Hellenic Army – IT Research Office (ΓΕΠ)</strong> | Nov 2025 – Present</p>
-          <ul>
-            <li>Designed automated data-entry pipelines (Python, Google Forms, QR codes) to streamline military onboarding workflows.</li>
-            <li>Maintained highly available LAN infrastructure and digital resources.</li>
+          <h3 style="margin-bottom: 0.2rem;">IT Specialist & Data Support</h3>
+          <p style="color: var(--accent); font-weight: 600; margin-top:0;">Hellenic Army - IT Research Office | Nov 2025 - Present</p>
+          <ul style="padding-left: 1.2rem; margin-top: 1rem;">
+            <li>Designed and deployed an automated data-entry platform utilizing QR codes and spreadsheet synchronization to optimize recruit onboarding workflows.</li>
+            <li>Configured and maintained secure LAN deployments ensuring high-availability resource sharing.</li>
           </ul>
         </div>
         
         <div class="card">
-          <h3>Software Engineering Intern</h3>
-          <p><strong>Web2learn</strong> | May 2025 – Oct 2025</p>
-          <ul>
-            <li>Developed backend authentication integrating multiple platforms.</li>
-            <li>Configured secure Single Sign-On (SSO) using Keycloak (OAuth 2.0 / OIDC).</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Data Administration Assistant</h3>
-          <p><strong>Insurance Office</strong> | Nov 2022 – Aug 2023</p>
-          <ul>
-            <li>Built custom Python analytics scripts to parse and extract data from structural contracts.</li>
-            <li>Optimized database workflows, drastically reducing manual data-entry time.</li>
+          <h3 style="margin-bottom: 0.2rem;">Software Engineering Intern</h3>
+          <p style="color: var(--accent); font-weight: 600; margin-top:0;">Web2learn | May 2025 - Oct 2025</p>
+          <ul style="padding-left: 1.2rem; margin-top: 1rem;">
+            <li>Implemented secure Single Sign-On (SSO) flows using Keycloak with OAuth 2.0 and OIDC protocols.</li>
+            <li>Managed secure JWT token lifecycles and strictly enforced endpoint access controls.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="contact">
-        <a href="mailto:mixaliskappa@gmail.com">Email</a> |
-        <a href="https://github.com/karaoulas" target="_blank">GitHub</a> |
-        <a href="https://linkedin.com/in/karaoulas" target="_blank">LinkedIn</a> |
-        <a href="Michalis-Giannakopoulos-CV.pdf" class="btn" download>Download CV</a>
+    <section id="contact" style="text-align: center; margin-top: 4rem;">
+      <h2>Let's Connect</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 2rem;">Currently looking for opportunities in Data Engineering and Cloud Architecture.</p>
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="mailto:mixaliskappa@gmail.com" class="btn">Email Me</a>
+        <a href="https://linkedin.com/in/karaoulas" target="_blank" class="btn" style="background: #0077b5;">LinkedIn</a>
+        <a href="https://github.com/karaoulas" target="_blank" class="btn" style="background: #333;">GitHub</a>
       </div>
     </section>
   </main>
+
   <script>
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    
+    // Check local storage for theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      htmlElement.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+      initCanvas(); // Redraw canvas for new theme colors
+    });
+
+    function updateThemeIcon(theme) {
+      themeToggle.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progress-bar").style.width = scrolled + "%";
+    });
+
+    // Project Filtering Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        projectItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category').includes(filterValue)) {
+            item.style.display = 'flex';
+            setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'none'; }, 50);
+          } else {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => { item.style.display = 'none'; }, 300);
+          }
+        });
+      });
+    });
+
+    // Typing Animation
     const lines = [
-      "Data Engineer | Databricks & Cloud Enthusiast",
-      "Certified AWS AI Practitioner",
-      "Building Scalable Data Pipelines"
+      "Data Engineer",
+      "MSc Applied Data Science Student",
+      "AWS Certified AI Practitioner",
+      "Building Scalable ETL Pipelines"
     ];
     let line = 0, char = 0;
     const typingEl = document.getElementById('typing');
+    
     function type() {
       if (line < lines.length) {
         if (char < lines[line].length) {
           typingEl.textContent = lines[line].slice(0, char+1);
           char++;
-          setTimeout(type, 60);
+          setTimeout(type, 50);
         } else {
-          setTimeout(() => {
-            char = 0;
-            line++;
-            setTimeout(type, 700);
-          }, 1200);
+          setTimeout(() => { char = 0; line++; setTimeout(type, 500); }, 1500);
         }
       } else {
-        line = 0;
-        char = 0;
-        setTimeout(type, 700);
+        line = 0; char = 0; setTimeout(type, 500);
       }
     }
-    type();
 
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => document.querySelector('.hero-title').classList.add('visible'), 200);
-      setTimeout(() => document.querySelector('.hero-typing').classList.add('visible'), 700);
-      setTimeout(() => document.querySelector('.hero-cta').classList.add('visible'), 1200);
-    });
-
-    function revealOnScroll() {
-      const sections = document.querySelectorAll('section');
-      const cards = document.querySelectorAll('.card');
-      const reveal = (el, delay = 0) => {
-        setTimeout(() => el.classList.add('visible'), delay);
-      };
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 80) reveal(section);
-      });
-      let delay = 0;
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 60) {
-          reveal(card, delay);
-          delay += 120;
+    // Intersection Observer for Scroll Fade-ins
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('DOMContentLoaded', revealOnScroll);
+    }, observerOptions);
 
-    function createParticle(x, y) {
-      const particle = document.createElement('div');
-      particle.className = 'hero-particle';
-      particle.style.width = Math.random() * 8 + 'px';
-      particle.style.height = particle.style.width;
-      particle.style.left = x + 'px';
-      particle.style.top = y + 'px';
-      document.querySelector('.hero-particles').appendChild(particle);
-      setTimeout(() => particle.remove(), 7000);
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      type();
+      setTimeout(() => document.querySelector('.hero-title').classList.add('visible'), 200);
+      setTimeout(() => document.querySelector('.hero-typing').classList.add('visible'), 600);
+      
+      document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+      initCanvas();
+    });
+
+    // Data Network Canvas Animation
+    let canvas, ctx, particles = [], animationFrameId;
+    
+    function initCanvas() {
+      if(animationFrameId) cancelAnimationFrame(animationFrameId);
+      
+      canvas = document.getElementById('networkCanvas');
+      ctx = canvas.getContext('2d');
+      
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = document.querySelector('header').offsetHeight;
+      };
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const dotColor = isDark ? 'rgba(74, 189, 172, 0.5)' : 'rgba(255, 255, 255, 0.4)';
+      const lineColor = isDark ? 'rgba(74, 189, 172, 0.15)' : 'rgba(255, 255, 255, 0.15)';
+
+      particles = [];
+      const numParticles = Math.min(window.innerWidth / 15, 80);
+      
+      for(let i=0; i<numParticles; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          radius: Math.random() * 2 + 1
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for(let i=0; i<particles.length; i++) {
+          let p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          
+          if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+          
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = dotColor;
+          ctx.fill();
+          
+          for(let j=i+1; j<particles.length; j++) {
+            let p2 = particles[j];
+            let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
+            if(dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = lineColor;
+              ctx.lineWidth = 1 - (dist/120);
+              ctx.stroke();
+            }
+          }
+        }
+        animationFrameId = requestAnimationFrame(animate);
+      }
+      animate();
     }
-    setInterval(() => {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      createParticle(x, y);
-    }, 150);
   </script>
 </body>
 </html>
