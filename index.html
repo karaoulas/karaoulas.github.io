@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Michalis Karaoulas | Data Engineer</title>
+  <title>Michalis Karaoulas | Software & Data</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -114,7 +114,7 @@
     .hero-content p.intro { color: var(--accent); margin-bottom: 20px; font-size: 1.1rem; }
     .hero-content h1 { font-size: 4rem; margin-bottom: 10px; line-height: 1.1; }
     .hero-content h3 { font-size: 2.5rem; color: var(--text-muted); margin-bottom: 20px; }
-    .hero-content p.desc { color: var(--text-muted); max-width: 500px; margin-bottom: 30px; font-size: 1.1rem; }
+    .hero-content p.desc { color: var(--text-muted); max-width: 550px; margin-bottom: 30px; font-size: 1.1rem; }
     
     /* Terminal UI */
     .terminal {
@@ -137,7 +137,7 @@
     .dot.yellow { background: #ffbd2e; }
     .dot.green { background: #27c93f; }
     .terminal-body { padding: 20px; font-size: 0.9rem; color: var(--text-muted); min-height: 200px;}
-    .prompt::before { content: "michalis@databricks:~$ "; color: var(--accent); }
+    .prompt::before { content: "michalis@dev:~$ "; color: var(--accent); }
 
     /* Skills Grid */
     .skills-grid {
@@ -218,8 +218,8 @@
     @media (max-width: 768px) {
       .hero { flex-direction: column; justify-content: center; text-align: center; }
       h2::after { width: 100px; }
-      .terminal { display: none; } /* Hide terminal on mobile for space */
-      nav { display: none; } /* Add a hamburger menu for prod */
+      .terminal { display: none; }
+      nav { display: none; }
     }
   </style>
 </head>
@@ -241,9 +241,9 @@
       <div class="hero-content">
         <p class="intro mono">Hi, my name is</p>
         <h1>Michalis Giannakopoulos.</h1>
-        <h3>I engineer data pipelines.</h3>
+        <h3>I build scalable software & data solutions.</h3>
         <p class="desc">
-          I am a Data Engineer and incoming MSc student in Applied Data Science based in Thessaloniki. I specialize in building scalable ETL pipelines, cloud infrastructure, and distributed systems to transform raw data into business intelligence.
+          I am a Computer Science graduate and incoming MSc student in Applied Data Science based in Thessaloniki. I enjoy building robust applications, from secure backend APIs to complex data processing pipelines and cloud infrastructure.
         </p>
         <a href="#projects" class="resume-btn" style="padding: 1rem 1.5rem; display: inline-block;">Check out my work!</a>
       </div>
@@ -261,8 +261,8 @@
     <section id="about">
       <h2><span class="text-accent mono" style="font-size: 1.2rem; margin-right: 10px;">01.</span> About Me</h2>
       <div style="display: grid; grid-template-columns: 1fr; gap: 20px; color: var(--text-muted); font-size: 1.05rem;">
-        <p>Hello! I'm Michalis, a Computer Science graduate from Aristotle University of Thessaloniki. My journey started in full-stack web development, but my passion quickly shifted toward the backend, specifically in how large-scale data is moved, secured, and analyzed.</p>
-        <p>Today, my main focus is on <strong>Data Engineering</strong> and <strong>Data Architecture</strong>. I am fully AWS certified as an AI Practitioner and am currently enrolled in an MSc program for Applied Data Science to further deepen my expertise.</p>
+        <p>Hello! I'm Michalis, a Computer Science graduate from Aristotle University of Thessaloniki. I thrive at the intersection of software development and data science, focusing on creating systems that are secure, efficient, and data-driven.</p>
+        <p>Whether I'm developing authentication services, modeling relational databases, or building modern Lakehouse data architectures, I love solving complex technical challenges. I am fully AWS certified as an AI Practitioner and am currently enrolled in an MSc program for Applied Data Science to continue expanding my toolkit.</p>
         <p>Here are a few highlights of my background:</p>
         <ul style="list-style: none; display: grid; grid-template-columns: repeat(2, minmax(200px, 1fr)); gap: 10px; font-family: 'Fira Code', monospace; font-size: 0.85rem; margin-top: 10px;">
           <li style="position: relative; padding-left: 20px;"><span style="color: var(--accent); position: absolute; left: 0;">▹</span> AWS Certified AI Practitioner</li>
@@ -276,13 +276,25 @@
     <section id="skills">
       <h2><span class="text-accent mono" style="font-size: 1.2rem; margin-right: 10px;">02.</span> Technical Arsenal</h2>
       <div class="skills-grid">
+        
         <div class="skill-card">
-          <h4>Data Engineering & Cloud</h4>
+          <h4>Software & Fundamentals</h4>
           <div class="badges">
-            <img src="https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white" alt="Databricks" />
-            <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white" alt="Spark" />
-            <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" alt="AWS" />
-            <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+            <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+            <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white" alt="Java" />
+            <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
+            <img src="https://img.shields.io/badge/HTML%2FCSS-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML/CSS" />
+            <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h4>APIs & Security</h4>
+          <div class="badges">
+            <img src="https://img.shields.io/badge/REST%20APIs-005571?style=for-the-badge&logo=swagger&logoColor=white" alt="REST APIs" />
+            <img src="https://img.shields.io/badge/OAuth%202.0-3C5A99?style=for-the-badge&logo=oauth&logoColor=white" alt="OAuth 2.0" />
+            <img src="https://img.shields.io/badge/OpenID-0082C9?style=for-the-badge&logo=openid&logoColor=white" alt="OIDC" />
+            <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
           </div>
         </div>
 
@@ -299,7 +311,6 @@
         <div class="skill-card">
           <h4>Data Science & ML</h4>
           <div class="badges">
-            <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
             <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas" />
             <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn" />
             <img src="https://img.shields.io/badge/SpaCy-09A3D5?style=for-the-badge&logo=spacy&logoColor=white" alt="SpaCy" />
@@ -307,23 +318,12 @@
         </div>
 
         <div class="skill-card">
-          <h4>APIs & Security</h4>
+          <h4>Cloud & Infrastructure</h4>
           <div class="badges">
-            <img src="https://img.shields.io/badge/REST%20APIs-005571?style=for-the-badge&logo=swagger&logoColor=white" alt="REST APIs" />
-            <img src="https://img.shields.io/badge/OAuth%202.0-3C5A99?style=for-the-badge&logo=oauth&logoColor=white" alt="OAuth 2.0" />
-            <img src="https://img.shields.io/badge/OpenID-0082C9?style=for-the-badge&logo=openid&logoColor=white" alt="OIDC" />
-            <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
-          </div>
-        </div>
-
-        <div class="skill-card">
-          <h4>Software & Fundamentals</h4>
-          <div class="badges">
-            <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white" alt="Java" />
-            <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
-            <img src="https://img.shields.io/badge/HTML%2FCSS-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML/CSS" />
-            <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
-            <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+            <img src="https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white" alt="Databricks" />
+            <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white" alt="Spark" />
+            <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" alt="AWS" />
+            <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
           </div>
         </div>
       </div>
@@ -334,12 +334,23 @@
       
       <div class="filter-container">
         <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="data">Data Engineering</button>
-        <button class="filter-btn" data-filter="api">APIs & Backend</button>
+        <button class="filter-btn" data-filter="api">Software & Backend</button>
+        <button class="filter-btn" data-filter="data">Data & ML</button>
       </div>
 
       <div class="projects-grid">
         <!-- Project 1 -->
+        <div class="project" data-category="api">
+          <div class="project-top">
+            <div class="folder-icon">🔐</div>
+            <div class="project-links"><a href="https://github.com/karaoulas/DigVer" target="_blank">↗</a></div>
+          </div>
+          <h3>DigVer — eIDAS Digital Wallet</h3>
+          <p>Flask web app simulating a digital credential ecosystem. Implemented PKI asymmetric encryption for secure signing, and containerized the deployment on AWS.</p>
+          <div class="tech-list"><span>Flask</span><span>REST API</span><span>Docker</span><span>AWS</span></div>
+        </div>
+
+        <!-- Project 2 -->
         <div class="project" data-category="data">
           <div class="project-top">
             <div class="folder-icon">🗄️</div>
@@ -350,7 +361,18 @@
           <div class="tech-list"><span>Databricks</span><span>PySpark</span><span>Delta Lake</span></div>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Project 3 -->
+        <div class="project" data-category="api">
+          <div class="project-top">
+            <div class="folder-icon">📡</div>
+            <div class="project-links"><a href="https://github.com/karaoulas" target="_blank">↗</a></div>
+          </div>
+          <h3>Distributed Messaging System</h3>
+          <p>Designed a multithreaded client-server communications application integrating token verification for secure sessions and object-oriented server logic.</p>
+          <div class="tech-list"><span>Java RMI</span><span>Sockets</span><span>Auth</span></div>
+        </div>
+
+        <!-- Project 4 -->
         <div class="project" data-category="data">
           <div class="project-top">
             <div class="folder-icon">📊</div>
@@ -361,7 +383,7 @@
           <div class="tech-list"><span>MySQL</span><span>SQL</span><span>Data Modeling</span></div>
         </div>
 
-        <!-- Project 3 -->
+        <!-- Project 5 -->
         <div class="project" data-category="data">
           <div class="project-top">
             <div class="folder-icon">🧠</div>
@@ -371,38 +393,16 @@
           <p>BSc Thesis: Built a text processing data pipeline in Python to ingest unstructured educational documents and benchmark them against market indicators using K-means and LDA.</p>
           <div class="tech-list"><span>Python</span><span>SpaCy</span><span>Machine Learning</span></div>
         </div>
-
-        <!-- Project 4 -->
-        <div class="project" data-category="api">
-          <div class="project-top">
-            <div class="folder-icon">🔐</div>
-            <div class="project-links"><a href="https://github.com/karaoulas/DigVer" target="_blank">↗</a></div>
-          </div>
-          <h3>DigVer — eIDAS Digital Wallet</h3>
-          <p>Flask web app simulating a digital credential ecosystem. Implemented PKI asymmetric encryption for secure signing, and containerized the deployment on AWS.</p>
-          <div class="tech-list"><span>Flask</span><span>REST API</span><span>Docker</span><span>AWS</span></div>
-        </div>
         
-        <!-- Project 5 -->
+        <!-- Project 6 -->
         <div class="project" data-category="data">
           <div class="project-top">
             <div class="folder-icon">📈</div>
             <div class="project-links"><a href="https://github.com/karaoulas/Insurance" target="_blank">↗</a></div>
           </div>
-          <h3>Insurance Analytics Pipeline</h3>
+          <h3>Insurance Analytics Scripts</h3>
           <p>Designed custom Python analytics scripts to parse, automate, and extract insights from complex structural contract data, significantly reducing manual data-entry times.</p>
           <div class="tech-list"><span>Python</span><span>Pandas</span><span>Data Extraction</span></div>
-        </div>
-
-        <!-- Project 6 -->
-        <div class="project" data-category="api">
-          <div class="project-top">
-            <div class="folder-icon">📡</div>
-            <div class="project-links"><a href="https://github.com/karaoulas" target="_blank">↗</a></div>
-          </div>
-          <h3>Distributed Messaging System</h3>
-          <p>Designed a multithreaded client-server communications application integrating token verification for secure sessions and object-oriented server logic.</p>
-          <div class="tech-list"><span>Java RMI</span><span>Sockets</span><span>Auth</span></div>
         </div>
       </div>
     </section>
@@ -466,7 +466,7 @@
       if (i < termText.length) {
         let char = termText.charAt(i);
         if(char === '\n') {
-          document.getElementById("term-text").innerHTML += "<br><span style='color:var(--accent)'>michalis@databricks:~$ </span>";
+          document.getElementById("term-text").innerHTML += "<br><span style='color:var(--accent)'>michalis@dev:~$ </span>";
         } else {
           document.getElementById("term-text").innerHTML += char;
         }
